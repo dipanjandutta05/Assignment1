@@ -1,5 +1,5 @@
 from django.contrib import admin
-from doctorAppointment.models import Doctor, DoctorSlot, Patient, AppointmentDetails
+from doctorAppointment.models import Doctor, DoctorSlot, Patient, Appointment
 
 # Register your models here.
 
@@ -18,6 +18,6 @@ class PattientAdmin(admin.ModelAdmin):
     list_display = ['patient_id', 'name', 'contact', 'location']
 
 
-@admin.register(AppointmentDetails)
-class AppointmentDetailsAdmin(admin.ModelAdmin):
-    list_display = ['appointment_id', 'doctor' ,'doctor_name', 'doctor_speciality', 'patient' ,'patient_name', 'patient_location', 'doctor_slot' ,'slot_date', 'slot_start_time', 'slot_end_time']
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ['appointment_id' ,'doctor', 'patient', 'doctor_slot', 'slot_date', 'slot_start_time', 'slot_end_time']

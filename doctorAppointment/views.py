@@ -1,8 +1,10 @@
+from datetime import datetime
 from django.shortcuts import render
 from doctorAppointment.models import Doctor, DoctorSlot
 from doctorAppointment.serializers import DocListSerializer,DocSlotSerializer, AppointmentSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
+from django.utils import timezone
 
 
 # api for doctors to give their availablity information
@@ -25,7 +27,7 @@ class DoctorListView(viewsets.ViewSet):
 # api to get doctors available slots
 class SlotAvailableView(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
-        queryset = DoctorSlot.objects.filter(doctors_id=pk, is_booked=False)
+        queryset = DoctorSlot.objects.filter(doctors_id=pk, is_booked=False, slot_date__gte = datetime.today().date())
         serializer = DocSlotSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -38,6 +40,7 @@ class BookAppointmentView(viewsets.ViewSet):
             serializer = AppointmentSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                DoctorSlot.objects.filter(doctorslot_id=slot).update(is_booked=True)
                 return Response({'message': 'Appointment booked successfully'})
             return Response(serializer.errors)
         return Response({'message': 'This slot is Booked'})
