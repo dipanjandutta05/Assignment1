@@ -1,4 +1,5 @@
 from datetime import datetime
+from pydoc import doc
 from django.shortcuts import render
 from doctorAppointment.models import Doctor, DoctorSlot
 from doctorAppointment.serializers import DocListSerializer,DocSlotSerializer, AppointmentSerializer
@@ -10,9 +11,12 @@ from django.utils import timezone
 # api for doctors to give their availablity information
 class DoctorSlotAvailability(viewsets.ViewSet):
     def create(self, request):
+        doc_id = request.data.get('doctors_id')
+        doctor_id = Doctor.objects.get(doctor_id=doc_id)
         serializer = DocSlotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            Doctor.objects.filter(doctor_id=doctor_id).update(is_available=True)
             return Response({'message': 'Your Data is Saved'})
         return Response(serializer.errors)
 
@@ -27,7 +31,7 @@ class DoctorListView(viewsets.ViewSet):
 # api to get doctors available slots
 class SlotAvailableView(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
-        queryset = DoctorSlot.objects.filter(doctors_id=pk, is_booked=False, slot_date__gte = datetime.today().date())
+        queryset = DoctorSlot.objects.filter(doctor_id=pk, is_booked=False, slot_date__gte = datetime.today().date())
         serializer = DocSlotSerializer(queryset, many=True)
         return Response(serializer.data)
 

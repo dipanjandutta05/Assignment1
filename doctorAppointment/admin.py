@@ -10,7 +10,7 @@ class docAdmin(admin.ModelAdmin):
 
 @admin.register(DoctorSlot)
 class SlotAdmin(admin.ModelAdmin):
-   list_display = ['doctorslot_id', 'slot_date', 'slot_start_time', 'slot_end_time', 'doctors_id', 'is_booked']
+   list_display = ['doctorslot_id', 'slot_date', 'slot_start_time', 'slot_end_time', 'doctor_id', 'is_booked']
 
 
 @admin.register(Patient)
@@ -20,4 +20,4 @@ class PattientAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ['appointment_id' ,'doctor', 'patient', 'doctor_slot', 'slot_date', 'slot_start_time', 'slot_end_time']
+    list_display = ['appointment_id' ,'doctor_id', 'patient_id', 'doctorslot_id', 'slot_date', 'slot_start_time', 'slot_end_time']

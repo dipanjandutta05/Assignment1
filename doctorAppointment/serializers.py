@@ -9,10 +9,10 @@ class DocListSerializer(serializers.ModelSerializer):
 class DocSlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorSlot
-        fields = ['doctorslot_id' ,'slot_date', 'slot_start_time', 'slot_end_time', 'doctors_id']
+        fields = ['doctorslot_id' ,'slot_date', 'slot_start_time', 'slot_end_time', 'doctor_id']
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        fields = ['doctor', 'patient', 'doctor_slot', 'slot_date', 'slot_start_time', 'slot_end_time']
+        fields = ['doctor_id', 'patient_id', 'doctorslot_id', 'slot_date', 'slot_start_time', 'slot_end_time']
