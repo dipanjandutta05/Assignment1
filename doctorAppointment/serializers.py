@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from doctorAppointment.models import Doctor, DoctorSlot, AppointmentDetails
+from doctorAppointment.models import Doctor, DoctorSlot, Appointment
 
 class DocListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,11 +9,10 @@ class DocListSerializer(serializers.ModelSerializer):
 class DocSlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorSlot
-        fields = ['doctorslot_id' ,'slot_date', 'slot_start_time', 'slot_end_time', 'doctors_id']
+        fields = ['doctorslot_id' ,'slot_date', 'slot_start_time', 'slot_end_time', 'doctor_id']
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AppointmentDetails
-        fields = ['doctor' ,'doctor_name', 'doctor_speciality', 'patient', 'patient_name', 'patient_location', 'doctor_slot' ,'slot_date', 'slot_start_time', 'slot_end_time']
-
+        model = Appointment
+        fields = ['doctor_id', 'patient_id', 'doctorslot_id', 'slot_date', 'slot_start_time', 'slot_end_time']
